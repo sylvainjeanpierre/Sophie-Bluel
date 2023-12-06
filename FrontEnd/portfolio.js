@@ -2,6 +2,33 @@
 const reponse = await fetch("http://localhost:5678/api/works");
 let portfolio = await reponse.json();
 
+const btnLog = document.querySelector("#btn-log");
+const btnModifier = document.querySelector("#btn-modifier")
+
+function login() {
+    btnLog.innerText = "logout";
+    btnModifier.style.display = "block"
+}
+
+function logout() {
+    localStorage.removeItem("log");
+    localStorage.removeItem("token");
+    location.reload()
+}
+
+if (localStorage.getItem("log") === "true") {
+    login()
+}
+
+btnLog.addEventListener("click", function () {
+    if (localStorage.getItem("log") === "true") {
+        logout()
+    }
+    else {
+        window.location.href = "login.html"
+    }
+
+});
 
 
 // *** The function to generate the portflio *** //
