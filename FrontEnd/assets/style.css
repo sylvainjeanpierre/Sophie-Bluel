@@ -85,6 +85,11 @@ h2{
 	font-size: 30px;
 	color: #1D6154
 }
+
+button {
+	font-family: 'Syne';
+}
+
 nav ul {
 	display: flex;
 	align-items: center;
@@ -130,7 +135,13 @@ li:hover {
 }
 
 #btn-modifier {
+	background-color: transparent;
+	border: none;
 	display: none;
+}
+
+#btn-modifier:hover {
+	opacity: 50%;
 }
 
 #projets-modifier {
@@ -273,4 +284,155 @@ footer nav ul {
 	text-decoration: underline;
 	margin-bottom: 20px;
 	cursor: pointer;
+}
+
+/* Modal properties */
+
+#modale {
+	display: none;
+	flex-direction: column;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 600px;
+	height: 700px;
+	margin-top: -350px;		/* Half of height for center */
+	margin-left: -300px;	/* Half of width for center */
+	background-color: white;
+	border-radius: 10px;
+	align-items: center;
+}
+
+#add-form {
+	display: none;
+	flex-direction: column;
+	width: 80%;
+	height: 65%;
+	margin: 0;
+	border-bottom: solid 1px rgb(131, 131, 131);
+}
+
+#new-image-frame {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 200px;
+	background-color: rgb(223, 238, 238);
+}
+
+#new-image-icone {
+	width: 60px;
+	margin-bottom: 20px;
+}
+
+#new-image-button {
+	border: none;
+	border-radius: 20px;
+	padding: 10px 20px 10px 20px;
+	background-color: rgb(199, 199, 199);
+	margin-bottom: 10px;
+}
+
+#add-form label {
+	margin-top: 40px;
+}
+
+#titre-input {
+	width: 100%;
+	height: 40px;
+	border: none;
+	box-shadow: 5px 5px 5px rgb(235, 235, 235);
+	margin-top: 10px;
+}
+
+#categorie-input {
+	width: 100%;
+	height: 40px;
+	border: none;
+	box-shadow: 5px 5px 5px rgb(235, 235, 235);
+	margin-top: 10px;
+}
+
+
+#btn-back {
+	display: none;
+	position: absolute;
+	top: 25px;
+	left: 20px;
+	background-color: transparent;
+	border: none;
+}
+
+#btn-back img {
+	width: 20px;
+}
+
+#btn-back:hover {
+	opacity: 50%;
+}
+
+#btn-echap {
+	position: absolute;
+	top: 20px;
+	left: 540px;
+	background-color: transparent;
+	border: none;
+}
+
+#btn-echap img {
+	width: 30px;
+}
+
+#btn-echap:hover {
+	opacity: 50%;
+}
+
+#modale h3 {
+	font-size: 3ch;
+	margin: 50px 0 30px 0;
+}
+
+#gallery-modale {
+	overflow: auto;
+	width: 80%;
+	height: 65%;
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0;
+	border-bottom: solid 1px rgb(131, 131, 131);
+}
+
+#gallery-modale figure {
+	width: 76px;
+	margin: 10px;
+}
+
+.image-figure {
+	width: 100%;
+}
+
+.btn-delete {
+	width: 25%;
+	position: relative;
+	bottom: 100px;
+	left: 54px;
+}
+
+.btn-delete:hover {
+	opacity: 70%;
+}
+
+#btn-ajouter {
+	margin-top: 50px;
+	padding: 10px 40px 10px 40px;
+	border: none;
+	border-radius: 20px;
+	background-color: #1D6154;
+	color: white;
+}
+
+#btn-ajouter:hover {
+	opacity: 90%;
 }

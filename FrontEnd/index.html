@@ -54,9 +54,9 @@
 		<section id="portfolio">
 			<div id="projets-modifier">
 				<h2>Mes Projets</h2>
-				<a href="#" id="btn-modifier">
+				<button id="btn-modifier">
 					<img src="/FrontEnd/assets/icons/modifier.png" alt="bouton-modifier">
-				</a>
+				</button>
 			</div>
 
 			<div class="filters">
@@ -93,5 +93,36 @@
 		</nav>
 	</footer>
 </body>
+
+<aside id="modale" role="dialog">
+	<button id="btn-back"><img src="/FrontEnd/assets/icons/back.png" alt="bouton-retour"></button>
+	<button id="btn-echap"><img src="/FrontEnd/assets/icons/echap.png" alt="bouton-echap"></button>
+	<h3>Galerie photo</h3>
+	<section id="gallery-modale">
+		<!-- Create by JS -->
+	</section>
+	<section id="add-form">
+
+		<div id="new-image-frame">
+			<img src="/FrontEnd/assets/icons/add-image.png" alt="image" id="new-image-icone">
+			<button id="new-image-button">+ Ajouter photo</button>
+			<p>jpeg, png : 4mo max</p>
+		</div>
+
+		<label for="titre-input">Titre</label>
+		<input type="text" name="titre" id="titre-input">
+
+		<label for="categorie-input">Catégorie</label>
+		<select name="categorie" id="categorie-input">
+			<option value=""></option>
+			<option value="objets">Objets</option>
+			<option value="appartements">Appartements</option>
+			<option value="hotels-restaurants">Hotels & Restaurants</option>
+		</select>
+
+
+	</section>
+	<button id="btn-ajouter">Ajouter une photo</button>
+</aside>
 
 </html>

@@ -2,6 +2,7 @@
 const reponse = await fetch("http://localhost:5678/api/works");
 let portfolio = await reponse.json();
 
+
 const btnLog = document.querySelector("#btn-log");
 const btnModifier = document.querySelector("#btn-modifier")
 
@@ -91,3 +92,89 @@ btnFilterHotelsRestaurants.addEventListener("click", function () {
     document.querySelector(".gallery").innerHTML = "";
     generatePortfolio(portfolioFiltered);
 });
+
+
+// ******* Modale code *******//
+
+const sectionModale = document.querySelector("#modale");
+const galleryModale = document.querySelector("#gallery-modale");
+const addForm = document.querySelector("#add-form")
+const btnBack = document.querySelector("#btn-back");
+const btnEchap = document.querySelector("#btn-echap");
+const btnAjouter = document.querySelector("#btn-ajouter");
+const titreModale = document.querySelector("#modale h3")
+
+function generatePortfolioModale(portfolio) {
+    for (let i = 0; i < portfolio.length; i++) {
+
+        const projet = portfolio[i];
+        const portfolioElement = document.createElement("figure");
+        const imageElement = document.createElement("img");
+        const btnDelete = document.createElement("img")
+        imageElement.src = projet.imageUrl;
+        btnDelete.src = "/FrontEnd/assets/icons/trash.png";
+        btnDelete.classList.add("btn-delete");
+        imageElement.classList.add("image-figure");
+
+        galleryModale.appendChild(portfolioElement);
+        portfolioElement.appendChild(imageElement);
+        portfolioElement.appendChild(btnDelete);
+    }
+}
+
+
+function modalLunch() {
+    sectionModale.style.display = "flex"
+    galleryModale.style.display = "flex"
+    generatePortfolioModale(portfolio)
+}
+
+function modalEchap() {
+    galleryModale.innerHTML = "";
+    sectionModale.style.display = "none"
+    btnBack.style.display = "none"
+    titreModale.innerText = "Galerie photo"
+    btnAjouter.innerText = "Ajouter une photo"
+    addForm.style.display = "none"
+}
+
+function modalBack() {
+    btnBack.style.display = "none";
+    sectionModale.style.display = "flex";
+    galleryModale.style.display = "flex";
+    titreModale.innerText = "Galerie photo"
+    btnAjouter.innerText = "Ajouter une photo"
+    addForm.style.display = "none"
+    generatePortfolioModale(portfolio)
+}
+
+function modalAdd() {
+    galleryModale.innerHTML = "";
+    galleryModale.style.display = "none"
+    btnBack.style.display = "block"
+    titreModale.innerText = "Ajout photo"
+    btnAjouter.innerText = "Valider"
+    addForm.style.display = "flex"
+}
+
+
+// ** Buttons actions ** //
+btnModifier.addEventListener("click", function() {
+    modalLunch()
+})
+
+btnEchap.addEventListener("click", function() {
+    modalEchap()
+})
+
+
+btnAjouter.addEventListener("click", function() {
+    modalAdd()
+})
+
+
+btnBack.addEventListener("click", function() {
+    modalBack()
+})
+
+
