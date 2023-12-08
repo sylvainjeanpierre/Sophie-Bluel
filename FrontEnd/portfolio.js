@@ -50,7 +50,6 @@ function generatePortfolio(portfolio) {
         sectionGallery.appendChild(portfolioElement);
         portfolioElement.appendChild(imageElement);
         portfolioElement.appendChild(titleElement);
-
     }
 }
 
@@ -96,9 +95,19 @@ btnFilterHotelsRestaurants.addEventListener("click", function () {
 
 // ******* Modale code *******//
 
+const body = document.querySelector("body");
 const sectionModale = document.querySelector("#modale");
+const modaleOverlay = document.querySelector("#modale-overlay");
 const galleryModale = document.querySelector("#gallery-modale");
-const addForm = document.querySelector("#add-form")
+const addForm = document.querySelector("#add-form");
+
+const newImageButton = document.querySelector("#new-image-button");
+const noImageUpload = document.querySelector("#no-image-upload")
+const imageUpload = document.querySelector("#image-upload");
+
+const titreInput = document.querySelector("#titre-input");
+const categorieInput = document.querySelector("#categorie-input")
+
 const btnBack = document.querySelector("#btn-back");
 const btnEchap = document.querySelector("#btn-echap");
 const btnAjouter = document.querySelector("#btn-ajouter");
@@ -124,8 +133,10 @@ function generatePortfolioModale(portfolio) {
 
 
 function modalLunch() {
-    sectionModale.style.display = "flex"
-    galleryModale.style.display = "flex"
+    sectionModale.style.display = "flex";
+    galleryModale.style.display = "flex";
+    modaleOverlay.style.display = "block";
+    body.style.overflow = "hidden";
     generatePortfolioModale(portfolio)
 }
 
@@ -136,6 +147,12 @@ function modalEchap() {
     titreModale.innerText = "Galerie photo"
     btnAjouter.innerText = "Ajouter une photo"
     addForm.style.display = "none"
+    modaleOverlay.style.display = "none"
+    body.style.overflow = "visible";
+    imageUpload.src = "";
+    newImageButton.value = null;
+    noImageUpload.style.display = "flex";
+    imageUpload.style.display = "none"
 }
 
 function modalBack() {
@@ -145,6 +162,10 @@ function modalBack() {
     titreModale.innerText = "Galerie photo"
     btnAjouter.innerText = "Ajouter une photo"
     addForm.style.display = "none"
+    imageUpload.src = "";
+    newImageButton.value = null;
+    noImageUpload.style.display = "flex";
+    imageUpload.style.display = "none"
     generatePortfolioModale(portfolio)
 }
 
@@ -159,22 +180,65 @@ function modalAdd() {
 
 
 // ** Buttons actions ** //
-btnModifier.addEventListener("click", function() {
+btnModifier.addEventListener("click", function () {
     modalLunch()
 })
 
-btnEchap.addEventListener("click", function() {
+btnEchap.addEventListener("click", function () {
     modalEchap()
 })
 
 
-btnAjouter.addEventListener("click", function() {
+btnAjouter.addEventListener("click", function () {
     modalAdd()
 })
 
 
-btnBack.addEventListener("click", function() {
+btnBack.addEventListener("click", function () {
     modalBack()
 })
 
 
+newImageButton.addEventListener("change", function (event) {
+    imageUpload.src = URL.createObjectURL(event.target.files[0]);
+    noImageUpload.style.display = "none";
+    imageUpload.style.display = "block"
+})
+
+
+// btnAjouter.addEventListener("click", function (event) {
+//     event.preventDefault();
+//     portfolio.lenght++
+//     const infosLog = {
+//         "id": portfolio.lenght
+//         "title": titreInput,
+//         "imageUrl": imageUpload.src,
+//         "categoryId": categorieInput,
+//         "userId": 0
+//     }
+//     const infosLogJSON = JSON.stringify(infosLog);
+
+//     fetch("http://localhost:5678/api/users/login", {
+//         method: "POST",
+//         body: infosLogJSON,
+//         headers: {
+//             "Content-Type": "application/json",
+//         }
+//     }).then(function (response) {
+//         if (response.status === 200) {
+//             return response.json();
+//         } else if (response.status === 404) {
+//             loginFailed.innerText = "Erreur dans l'identifiant ou le mot de passe";
+//         } else {
+//             console.log("Erreur " + response.status);
+//         }
+//     }).then(function (response) {
+//         if (response.token) {
+//             localStorage.setItem("token", response.token);
+//             localStorage.setItem("log", true);
+//             window.location.href = "index.html"
+//         }
+//     }).catch(function (error) {
+//         console.log(error);
+//     });
+// });

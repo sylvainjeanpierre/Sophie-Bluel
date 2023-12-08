@@ -92,37 +92,47 @@
 			</ul>
 		</nav>
 	</footer>
+
+	<div id="modale-overlay"></div>
+
+	<aside id="modale" role="dialog">
+		<button id="btn-back"><img src="/FrontEnd/assets/icons/back.png" alt="bouton-retour"></button>
+		<button id="btn-echap"><img src="/FrontEnd/assets/icons/echap.png" alt="bouton-echap"></button>
+		<h3>Galerie photo</h3>
+		<section id="gallery-modale">
+			<!-- Create by JS -->
+		</section>
+		<section id="add-form">
+
+			<div id="new-image-frame">
+
+				<div id="no-image-upload">
+					<img src="/FrontEnd/assets/icons/add-image.png" alt="image" id="new-image-icone">
+					<input type="file" id="new-image-button"/>
+					<label for="new-image-button">+ Ajouter photo</label>
+					<p>jpeg, png : 4mo max</p>
+				</div>
+
+				<img id="image-upload" alt="image-importee">
+
+			</div>
+
+			<label for="titre-input">Titre</label>
+			<input type="text" name="titre" id="titre-input">
+
+			<label for="categorie-input">Catégorie</label>
+			<select name="categorie" id="categorie-input">
+				<option value=""></option>
+				<option value="objets">Objets</option>
+				<option value="appartements">Appartements</option>
+				<option value="hotels-restaurants">Hotels & Restaurants</option>
+			</select>
+
+
+		</section>
+		<button id="btn-ajouter">Ajouter une photo</button>
+	</aside>
+
 </body>
-
-<aside id="modale" role="dialog">
-	<button id="btn-back"><img src="/FrontEnd/assets/icons/back.png" alt="bouton-retour"></button>
-	<button id="btn-echap"><img src="/FrontEnd/assets/icons/echap.png" alt="bouton-echap"></button>
-	<h3>Galerie photo</h3>
-	<section id="gallery-modale">
-		<!-- Create by JS -->
-	</section>
-	<section id="add-form">
-
-		<div id="new-image-frame">
-			<img src="/FrontEnd/assets/icons/add-image.png" alt="image" id="new-image-icone">
-			<button id="new-image-button">+ Ajouter photo</button>
-			<p>jpeg, png : 4mo max</p>
-		</div>
-
-		<label for="titre-input">Titre</label>
-		<input type="text" name="titre" id="titre-input">
-
-		<label for="categorie-input">Catégorie</label>
-		<select name="categorie" id="categorie-input">
-			<option value=""></option>
-			<option value="objets">Objets</option>
-			<option value="appartements">Appartements</option>
-			<option value="hotels-restaurants">Hotels & Restaurants</option>
-		</select>
-
-
-	</section>
-	<button id="btn-ajouter">Ajouter une photo</button>
-</aside>
 
 </html>
