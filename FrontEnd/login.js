@@ -33,7 +33,7 @@ btnSeConnecter.addEventListener("click", function (event) {
     }).then(function (response) {
         if (response.token) {
             localStorage.setItem("token", response.token);
-            localStorage.setItem("log", true);
+            localStorage.setItem("userId", response.userId);
             window.location.href = "index.html"
         }
     }).catch(function (error) {

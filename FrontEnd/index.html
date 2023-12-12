@@ -108,8 +108,8 @@
 
 				<div id="no-image-upload">
 					<img src="/FrontEnd/assets/icons/add-image.png" alt="image" id="new-image-icone">
-					<input type="file" id="new-image-button"/>
-					<label for="new-image-button">+ Ajouter photo</label>
+					<input type="file" id="new-image-input"/>
+					<label for="new-image-input">+ Ajouter photo</label>
 					<p>jpeg, png : 4mo max</p>
 				</div>
 
@@ -122,16 +122,15 @@
 
 			<label for="categorie-input">Catégorie</label>
 			<select name="categorie" id="categorie-input">
-				<option value=""></option>
-				<option value="objets">Objets</option>
-				<option value="appartements">Appartements</option>
-				<option value="hotels-restaurants">Hotels & Restaurants</option>
+				<option></option>
+				
 			</select>
-
 
 		</section>
 		<button id="btn-ajouter">Ajouter une photo</button>
 	</aside>
+
+	<p id="error-message"></p>
 
 </body>
 

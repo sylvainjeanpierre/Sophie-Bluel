@@ -349,7 +349,7 @@ footer nav ul {
 	margin-bottom: 20px;
 }
 
-#new-image-button + label {
+#new-image-input + label {
 	border: none;
 	border-radius: 20px;
 	padding: 10px 20px 10px 20px;
@@ -357,7 +357,7 @@ footer nav ul {
 	margin-bottom: 10px;
 }
 
-#new-image-button {
+#new-image-input {
 	width: 0.1px;
 	height: 0.1px;
 	opacity: 0;
@@ -366,7 +366,7 @@ footer nav ul {
 	z-index: -1;
 }
 
-#new-image-button + label:hover {
+#new-image-input + label:hover {
 	opacity: 60%;
 }
 
@@ -449,7 +449,7 @@ footer nav ul {
 }
 
 #btn-ajouter {
-	margin-top: 50px;
+	margin: 50px 0 15px 0;
 	padding: 10px 40px 10px 40px;
 	border: none;
 	border-radius: 20px;
@@ -459,4 +459,9 @@ footer nav ul {
 
 #btn-ajouter:hover {
 	opacity: 90%;
+}
+
+#error-message {
+	color: red;
+	font-size: 18px;
 }

@@ -1,6 +1,10 @@
 // *** API recovery *** //
-const reponse = await fetch("http://localhost:5678/api/works");
-let portfolio = await reponse.json();
+const baseUrl = "http://localhost:5678/api"
+
+const portfolioJSON = await fetch(`${baseUrl}/works`);
+const categoriesJSON = await fetch(`${baseUrl}/categories`);
+let portfolio = await portfolioJSON.json();
+let categories = await categoriesJSON.json();
 
 
 const btnLog = document.querySelector("#btn-log");
@@ -12,17 +16,17 @@ function login() {
 }
 
 function logout() {
-    localStorage.removeItem("log");
+    localStorage.removeItem("userId");
     localStorage.removeItem("token");
     location.reload()
 }
 
-if (localStorage.getItem("log") === "true") {
+if (localStorage.getItem("userId") === "1") {
     login()
 }
 
 btnLog.addEventListener("click", function () {
-    if (localStorage.getItem("log") === "true") {
+    if (localStorage.getItem("userId") === "1") {
         logout()
     }
     else {
@@ -101,7 +105,7 @@ const modaleOverlay = document.querySelector("#modale-overlay");
 const galleryModale = document.querySelector("#gallery-modale");
 const addForm = document.querySelector("#add-form");
 
-const newImageButton = document.querySelector("#new-image-button");
+const newImageInput = document.querySelector("#new-image-input");
 const noImageUpload = document.querySelector("#no-image-upload")
 const imageUpload = document.querySelector("#image-upload");
 
@@ -111,18 +115,23 @@ const categorieInput = document.querySelector("#categorie-input")
 const btnBack = document.querySelector("#btn-back");
 const btnEchap = document.querySelector("#btn-echap");
 const btnAjouter = document.querySelector("#btn-ajouter");
-const titreModale = document.querySelector("#modale h3")
+const errorMsg = document.querySelector("#error-message");
+const titreModale = document.querySelector("#modale h3");
+
 
 function generatePortfolioModale(portfolio) {
     for (let i = 0; i < portfolio.length; i++) {
 
-        const projet = portfolio[i];
+        const project = portfolio[i];
         const portfolioElement = document.createElement("figure");
         const imageElement = document.createElement("img");
         const btnDelete = document.createElement("img")
-        imageElement.src = projet.imageUrl;
+        imageElement.src = project.imageUrl;
         btnDelete.src = "/FrontEnd/assets/icons/trash.png";
         btnDelete.classList.add("btn-delete");
+        btnDelete.addEventListener("click", function() {
+            removeProject(project.id)
+        })
         imageElement.classList.add("image-figure");
 
         galleryModale.appendChild(portfolioElement);
@@ -150,9 +159,10 @@ function modalEchap() {
     modaleOverlay.style.display = "none"
     body.style.overflow = "visible";
     imageUpload.src = "";
-    newImageButton.value = null;
+    newImageInput.value = null;
     noImageUpload.style.display = "flex";
-    imageUpload.style.display = "none"
+    imageUpload.style.display = "none";
+    errorMsg.innerText = "";
 }
 
 function modalBack() {
@@ -163,10 +173,11 @@ function modalBack() {
     btnAjouter.innerText = "Ajouter une photo"
     addForm.style.display = "none"
     imageUpload.src = "";
-    newImageButton.value = null;
+    newImageInput.value = null;
     noImageUpload.style.display = "flex";
     imageUpload.style.display = "none"
-    generatePortfolioModale(portfolio)
+    generatePortfolioModale(portfolio);
+    errorMsg.innerText = "";
 }
 
 function modalAdd() {
@@ -176,6 +187,95 @@ function modalAdd() {
     titreModale.innerText = "Ajout photo"
     btnAjouter.innerText = "Valider"
     addForm.style.display = "flex"
+}
+
+// *** Caterories input creation function *** //
+function generateCategories(categories) {
+    for (let i = 0; i < categories.length; i++) {
+
+        const category = categories[i];
+
+        const categoryName = document.createElement("option");
+        categoryName.innerText = category.name;
+        categoryName.value = category.id;
+
+        categorieInput.appendChild(categoryName);
+    }
+}
+
+generateCategories(categories)
+
+
+
+function newProjectFetch() {
+
+    var newProject = new FormData()
+    
+    newProject.append("image", newImageInput.files[0])
+    newProject.append("title", titreInput.value)
+    newProject.append("category", categorieInput.value)
+
+    fetch(`${baseUrl}/works`, {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+        body: newProject
+
+    }).then(function (response) {
+        if (response.status === 201) {
+            generatePortfolio(portfolio);
+        }
+    })
+}
+
+function formCheck() {
+
+
+    if (newImageInput.value === "") {
+        errorMsg.innerText = "Veuillez selectionner une image";
+        sectionModale.appendChild(errorMsg)
+    }
+
+    if (titreInput.value === "") {
+        if (newImageInput.value === "" && categorieInput.value != "") {
+            errorMsg.innerText = errorMsg.innerText + `${" et un titre"}`
+        }
+        else if (newImageInput.value === "" && categorieInput.value === "") {
+            errorMsg.innerText = errorMsg.innerText + `${", un titre"}`
+        }
+        else {
+            errorMsg.innerText = "Veuillez selectionner un titre";
+            sectionModale.appendChild(errorMsg)
+        }
+    }
+
+    if (categorieInput.value === "") {
+        if (newImageInput.value === "" || titreInput.value === "") {
+            errorMsg.innerText = errorMsg.innerText + `${" et une catégorie"}`
+        }
+        else {
+            errorMsg.innerText = "Veuillez selectionner une catégorie";
+            sectionModale.appendChild(errorMsg)
+        }
+    }
+
+    if (newImageInput.value != "" && titreInput.value != "" && categorieInput.value != "") {
+        errorMsg.innerText = "";
+        newProjectFetch()
+    }
+
+}
+
+
+
+function removeProject(projectId) {
+    fetch(`${baseUrl}/works/${projectId}`, {
+        method: "DELETE",
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+    })
 }
 
 
@@ -190,7 +290,13 @@ btnEchap.addEventListener("click", function () {
 
 
 btnAjouter.addEventListener("click", function () {
-    modalAdd()
+    if (btnAjouter.innerText === "Ajouter une photo") {
+        modalAdd()
+    }
+    else if (btnAjouter.innerText === "Valider") {
+        formCheck()
+        console.log(newImageInput.value)
+    }
 })
 
 
@@ -198,47 +304,14 @@ btnBack.addEventListener("click", function () {
     modalBack()
 })
 
+modaleOverlay.addEventListener("click", function () {
+    modalEchap()
+})
 
-newImageButton.addEventListener("change", function (event) {
+
+newImageInput.addEventListener("change", function (event) {
     imageUpload.src = URL.createObjectURL(event.target.files[0]);
     noImageUpload.style.display = "none";
     imageUpload.style.display = "block"
 })
 
-
-// btnAjouter.addEventListener("click", function (event) {
-//     event.preventDefault();
-//     portfolio.lenght++
-//     const infosLog = {
-//         "id": portfolio.lenght
-//         "title": titreInput,
-//         "imageUrl": imageUpload.src,
-//         "categoryId": categorieInput,
-//         "userId": 0
-//     }
-//     const infosLogJSON = JSON.stringify(infosLog);
-
-//     fetch("http://localhost:5678/api/users/login", {
-//         method: "POST",
-//         body: infosLogJSON,
-//         headers: {
-//             "Content-Type": "application/json",
-//         }
-//     }).then(function (response) {
-//         if (response.status === 200) {
-//             return response.json();
-//         } else if (response.status === 404) {
-//             loginFailed.innerText = "Erreur dans l'identifiant ou le mot de passe";
-//         } else {
-//             console.log("Erreur " + response.status);
-//         }
-//     }).then(function (response) {
-//         if (response.token) {
-//             localStorage.setItem("token", response.token);
-//             localStorage.setItem("log", true);
-//             window.location.href = "index.html"
-//         }
-//     }).catch(function (error) {
-//         console.log(error);
-//     });
-// });
