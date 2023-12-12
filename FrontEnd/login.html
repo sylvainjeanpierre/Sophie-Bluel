@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-    <meta charset="UTF-8">
+	<meta charset="UTF-8">
 	<title>Page de connexion</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,19 +13,28 @@
 	<link rel="stylesheet" href="./assets/style.css">
 	<script type="module" src="login.js"></script>
 </head>
+
 <body>
-    <header>
+	<header>
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
 			<ul>
-				<a href="/FrontEnd/index.html"><li>projets</li></a>
-				<a href="/FrontEnd/index.html"><li>contact</li></a>
-				<a href="#"><li>login</li></a>
-				<a href="#"><li><img src="./assets/icons/instagram.png" alt="Instagram"></li></a>
+				<a href="/FrontEnd/index.html#portfolio">
+					<li>projets</li>
+				</a>
+				<a href="/FrontEnd/index.html#contact">
+					<li>contact</li>
+				</a>
+				<a href="#">
+					<li id="login-page-input">login</li>
+				</a>
+				<a href="#">
+					<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+				</a>
 			</ul>
 		</nav>
 	</header>
-     <main id="login-main">
+	<main id="login-main">
 		<h2>Log in</h2>
 		<form id="login-form">
 			<p>E-mail</p>
@@ -34,6 +44,16 @@
 		</form>
 		<button id="btn-se-connecter">Se connecter</button>
 		<button id="btn-mdp-oublie">Mot de passe oublié</button>
-	 </main>
+	</main>
+
+	<footer>
+		<nav>
+			<ul>
+				<li>Mentions Légales</li>
+			</ul>
+		</nav>
+	</footer>
+
 </body>
+
 </html>

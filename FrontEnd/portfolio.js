@@ -1,6 +1,7 @@
-// *** API recovery *** //
+// API base URL
 const baseUrl = "http://localhost:5678/api"
 
+// Projects and categories fetch
 const portfolioJSON = await fetch(`${baseUrl}/works`);
 const categoriesJSON = await fetch(`${baseUrl}/categories`);
 let portfolio = await portfolioJSON.json();
@@ -12,7 +13,7 @@ const btnModifier = document.querySelector("#btn-modifier")
 
 function login() {
     btnLog.innerText = "logout";
-    btnModifier.style.display = "block"
+    btnModifier.style.display = "block";
 }
 
 function logout() {
@@ -25,6 +26,7 @@ if (localStorage.getItem("userId") === "1") {
     login()
 }
 
+// If user connected, first click => logout and second => open login page
 btnLog.addEventListener("click", function () {
     if (localStorage.getItem("userId") === "1") {
         logout()
@@ -32,25 +34,24 @@ btnLog.addEventListener("click", function () {
     else {
         window.location.href = "login.html"
     }
-
 });
 
 
-// *** The function to generate the portflio *** //
+// Portfolio creation function on main page
 function generatePortfolio(portfolio) {
     for (let i = 0; i < portfolio.length; i++) {
 
         const projet = portfolio[i];
-        // *** DOM elements recovery *** //
+        // DOM elements recovery
         const sectionGallery = document.querySelector(".gallery");
-        // *** HTML tags creation *** //
+        // HTML tags creation
         const portfolioElement = document.createElement("figure");
         const imageElement = document.createElement("img");
         imageElement.src = projet.imageUrl;
         const titleElement = document.createElement("figcaption");
         titleElement.innerText = projet.title;
 
-        // *** Link tags to the DOM *** //
+        // Link tags to DOM
         sectionGallery.appendChild(portfolioElement);
         portfolioElement.appendChild(imageElement);
         portfolioElement.appendChild(titleElement);
@@ -60,12 +61,12 @@ function generatePortfolio(portfolio) {
 generatePortfolio(portfolio);
 
 
+// Categories filters buttons
 const btnFilterTous = document.querySelector(".filter-tous");
 btnFilterTous.addEventListener("click", function () {
     document.querySelector(".gallery").innerHTML = "";
     generatePortfolio(portfolio);
 });
-
 
 const btnFilterObjets = document.querySelector(".filter-objets");
 btnFilterObjets.addEventListener("click", function () {
@@ -76,7 +77,6 @@ btnFilterObjets.addEventListener("click", function () {
     generatePortfolio(portfolioFiltered);
 });
 
-
 const btnFilterAppartements = document.querySelector(".filter-appartements");
 btnFilterAppartements.addEventListener("click", function () {
     const portfolioFiltered = portfolio.filter(function (portfolio) {
@@ -85,7 +85,6 @@ btnFilterAppartements.addEventListener("click", function () {
     document.querySelector(".gallery").innerHTML = "";
     generatePortfolio(portfolioFiltered);
 });
-
 
 const btnFilterHotelsRestaurants = document.querySelector(".filter-hotels-restaurants");
 btnFilterHotelsRestaurants.addEventListener("click", function () {
@@ -97,8 +96,16 @@ btnFilterHotelsRestaurants.addEventListener("click", function () {
 });
 
 
-// ******* Modale code *******//
 
+
+
+
+
+
+
+// Modal code
+
+// DOM elements recovery
 const body = document.querySelector("body");
 const sectionModale = document.querySelector("#modale");
 const modaleOverlay = document.querySelector("#modale-overlay");
@@ -118,7 +125,7 @@ const btnAjouter = document.querySelector("#btn-ajouter");
 const errorMsg = document.querySelector("#error-message");
 const titreModale = document.querySelector("#modale h3");
 
-
+// Portfolio preview creation function on modal (with remove project function call inside)
 function generatePortfolioModale(portfolio) {
     for (let i = 0; i < portfolio.length; i++) {
 
@@ -129,7 +136,7 @@ function generatePortfolioModale(portfolio) {
         imageElement.src = project.imageUrl;
         btnDelete.src = "/FrontEnd/assets/icons/trash.png";
         btnDelete.classList.add("btn-delete");
-        btnDelete.addEventListener("click", function() {
+        btnDelete.addEventListener("click", function () {
             removeProject(project.id)
         })
         imageElement.classList.add("image-figure");
@@ -140,7 +147,7 @@ function generatePortfolioModale(portfolio) {
     }
 }
 
-
+// Functions for open, close the modal and switch between the preview page and the new project page
 function modalLunch() {
     sectionModale.style.display = "flex";
     galleryModale.style.display = "flex";
@@ -159,6 +166,7 @@ function modalEchap() {
     modaleOverlay.style.display = "none"
     body.style.overflow = "visible";
     imageUpload.src = "";
+    titreInput.value = "";
     newImageInput.value = null;
     noImageUpload.style.display = "flex";
     imageUpload.style.display = "none";
@@ -173,6 +181,7 @@ function modalBack() {
     btnAjouter.innerText = "Ajouter une photo"
     addForm.style.display = "none"
     imageUpload.src = "";
+    titreInput.value = "";
     newImageInput.value = null;
     noImageUpload.style.display = "flex";
     imageUpload.style.display = "none"
@@ -189,7 +198,7 @@ function modalAdd() {
     addForm.style.display = "flex"
 }
 
-// *** Caterories input creation function *** //
+// Input categorie recovery for new project page
 function generateCategories(categories) {
     for (let i = 0; i < categories.length; i++) {
 
@@ -206,11 +215,11 @@ function generateCategories(categories) {
 generateCategories(categories)
 
 
-
+// New project fetch function
 function newProjectFetch() {
 
     var newProject = new FormData()
-    
+
     newProject.append("image", newImageInput.files[0])
     newProject.append("title", titreInput.value)
     newProject.append("category", categorieInput.value)
@@ -227,10 +236,13 @@ function newProjectFetch() {
             generatePortfolio(portfolio);
         }
     })
+
+    newImageInput.value = "";
+    titreInput.value = "";
 }
 
+// Function that checks if all inputs are filled
 function formCheck() {
-
 
     if (newImageInput.value === "") {
         errorMsg.innerText = "Veuillez selectionner une image";
@@ -267,8 +279,7 @@ function formCheck() {
 
 }
 
-
-
+// Remove project ferch function
 function removeProject(projectId) {
     fetch(`${baseUrl}/works/${projectId}`, {
         method: "DELETE",
@@ -279,7 +290,7 @@ function removeProject(projectId) {
 }
 
 
-// ** Buttons actions ** //
+// Buttons actions
 btnModifier.addEventListener("click", function () {
     modalLunch()
 })
@@ -308,10 +319,9 @@ modaleOverlay.addEventListener("click", function () {
     modalEchap()
 })
 
-
+// Selected image preview function for the new project page
 newImageInput.addEventListener("change", function (event) {
     imageUpload.src = URL.createObjectURL(event.target.files[0]);
     noImageUpload.style.display = "none";
     imageUpload.style.display = "block"
 })
-

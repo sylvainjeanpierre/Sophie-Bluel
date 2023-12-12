@@ -1,3 +1,4 @@
+// DOM elements recovery
 const loginMain = document.querySelector("#login-main")
 const loginForm = document.querySelector("#login-form");
 const emailInput = document.querySelector("#email-input");
@@ -7,7 +8,7 @@ const btnMdpOublie = document.querySelector("btn-mpd-oublie");
 const loginFailed = document.createElement("p");
 loginMain.appendChild(loginFailed);
 
-
+// Fetch login function with token and userId recovery
 btnSeConnecter.addEventListener("click", function (event) {
     event.preventDefault();
     const infosLog = {
@@ -40,7 +41,3 @@ btnSeConnecter.addEventListener("click", function (event) {
         console.log(error);
     });
 });
-
-
-// sophie.bluel@test.tld
-// S0phie
