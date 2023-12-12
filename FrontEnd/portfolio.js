@@ -170,10 +170,12 @@ function modalEchap() {
     body.style.overflow = "visible";
     imageUpload.src = "";
     titreInput.value = "";
+    categorieInput.value = "";
     newImageInput.value = null;
     noImageUpload.style.display = "flex";
     imageUpload.style.display = "none";
     errorMsg.innerText = "";
+    btnAjouter.style.backgroundColor = "#1D6154"
 }
 
 function modalBack() {
@@ -185,11 +187,13 @@ function modalBack() {
     addForm.style.display = "none"
     imageUpload.src = "";
     titreInput.value = "";
+    categorieInput.value = "";
     newImageInput.value = null;
     noImageUpload.style.display = "flex";
     imageUpload.style.display = "none"
     generatePortfolioModale(portfolio);
     errorMsg.innerText = "";
+    btnAjouter.style.backgroundColor = "#1D6154"
 }
 
 function modalAdd() {
@@ -199,6 +203,7 @@ function modalAdd() {
     titreModale.innerText = "Ajout photo"
     btnAjouter.innerText = "Valider"
     addForm.style.display = "flex"
+    btnAjouter.style.backgroundColor = "grey"
 }
 
 // Input categorie recovery for new project page
@@ -290,6 +295,16 @@ function removeProject(projectId) {
 }
 
 
+addForm.addEventListener("change", function() {
+    if (newImageInput.value != "" && titreInput.value != "" && categorieInput.value != "") {
+        btnAjouter.style.backgroundColor = "#1D6154"
+    }
+    else {
+        btnAjouter.style.backgroundColor = "grey"
+    }
+})
+
+
 // Buttons actions
 btnModifier.addEventListener("click", function () {
     modalLunch()
@@ -306,7 +321,6 @@ btnAjouter.addEventListener("click", function () {
     }
     else if (btnAjouter.innerText === "Valider") {
         formCheck()
-        console.log(newImageInput.value)
     }
 })
 
