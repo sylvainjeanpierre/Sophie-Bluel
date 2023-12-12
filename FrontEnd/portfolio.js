@@ -125,6 +125,8 @@ const btnAjouter = document.querySelector("#btn-ajouter");
 const errorMsg = document.querySelector("#error-message");
 const titreModale = document.querySelector("#modale h3");
 
+sectionModale.appendChild(errorMsg);
+
 // Portfolio preview creation function on modal (with remove project function call inside)
 function generatePortfolioModale(portfolio) {
     for (let i = 0; i < portfolio.length; i++) {
@@ -136,7 +138,8 @@ function generatePortfolioModale(portfolio) {
         imageElement.src = project.imageUrl;
         btnDelete.src = "/FrontEnd/assets/icons/trash.png";
         btnDelete.classList.add("btn-delete");
-        btnDelete.addEventListener("click", function () {
+        btnDelete.addEventListener("click", function (event) {
+            event.preventDefault();
             removeProject(project.id)
         })
         imageElement.classList.add("image-figure");
@@ -246,7 +249,6 @@ function formCheck() {
 
     if (newImageInput.value === "") {
         errorMsg.innerText = "Veuillez selectionner une image";
-        sectionModale.appendChild(errorMsg)
     }
 
     if (titreInput.value === "") {
@@ -258,7 +260,6 @@ function formCheck() {
         }
         else {
             errorMsg.innerText = "Veuillez selectionner un titre";
-            sectionModale.appendChild(errorMsg)
         }
     }
 
@@ -268,7 +269,6 @@ function formCheck() {
         }
         else {
             errorMsg.innerText = "Veuillez selectionner une catégorie";
-            sectionModale.appendChild(errorMsg)
         }
     }
 
@@ -319,9 +319,16 @@ modaleOverlay.addEventListener("click", function () {
     modalEchap()
 })
 
-// Selected image preview function for the new project page
+// Selected image preview function for the new project page with file size check
 newImageInput.addEventListener("change", function (event) {
-    imageUpload.src = URL.createObjectURL(event.target.files[0]);
-    noImageUpload.style.display = "none";
-    imageUpload.style.display = "block"
+    if (this.files[0].size < 4194304) {
+        imageUpload.src = URL.createObjectURL(event.target.files[0]);
+        noImageUpload.style.display = "none";
+        imageUpload.style.display = "block";
+        errorMsg.innerText = "";
+    }
+    else {
+        errorMsg.innerText = "L'image est trop lourde (4 Mo max.)";
+        newImageInput.value = ""
+    }
 })
