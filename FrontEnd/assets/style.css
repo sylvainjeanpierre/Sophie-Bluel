@@ -244,7 +244,7 @@ footer nav ul {
 
 /* Login page properties */
 
-#login-page-input {
+#btn-log-login-page {
 	font-weight: bold;
 }
 
@@ -456,6 +456,7 @@ footer nav ul {
 
 .btn-delete:hover {
 	opacity: 70%;
+	cursor: pointer;
 }
 
 #btn-ajouter {
@@ -475,3 +476,19 @@ footer nav ul {
 	color: red;
 	font-size: 18px;
 }
+
+.popup-validation {
+	justify-content: center;
+	align-items: center;
+	border-radius: 30px;
+	background-color: lightgrey;
+	color: green;
+	font-size: 20px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 500px;
+	height: 50px;
+	margin-top: -25px;		/* Half of height for center */
+	margin-left: -250px;    /* Half of width for center */
+  }

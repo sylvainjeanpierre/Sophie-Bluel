@@ -1,13 +1,6 @@
 // API base URL
 const baseUrl = "http://localhost:5678/api"
 
-// Projects and categories fetch
-const portfolioJSON = await fetch(`${baseUrl}/works`);
-const categoriesJSON = await fetch(`${baseUrl}/categories`);
-let portfolio = await portfolioJSON.json();
-let categories = await categoriesJSON.json();
-
-
 const btnLog = document.querySelector("#btn-log");
 const btnModifier = document.querySelector("#btn-modifier")
 
@@ -36,14 +29,25 @@ btnLog.addEventListener("click", function () {
     }
 });
 
+// API portfolio fetch function
+let portfolio = ""
+async function portfolioFetch() {
+    let reponse = await fetch(`${baseUrl}/works`);
+    portfolio = await reponse.json();
+    generatePortfolio(portfolio);
+    generatePortfolioModale(portfolio)
+}
 
 // Portfolio creation function on main page
 function generatePortfolio(portfolio) {
+    // DOM element recovery
+    const sectionGallery = document.querySelector(".gallery");
+    // Gallery clear
+    sectionGallery.innerHTML = ""
+
     for (let i = 0; i < portfolio.length; i++) {
 
         const projet = portfolio[i];
-        // DOM elements recovery
-        const sectionGallery = document.querySelector(".gallery");
         // HTML tags creation
         const portfolioElement = document.createElement("figure");
         const imageElement = document.createElement("img");
@@ -55,10 +59,11 @@ function generatePortfolio(portfolio) {
         sectionGallery.appendChild(portfolioElement);
         portfolioElement.appendChild(imageElement);
         portfolioElement.appendChild(titleElement);
+        portfolioElement.setAttribute("id", projet.id)
     }
 }
 
-generatePortfolio(portfolio);
+portfolioFetch();
 
 
 // Categories filters buttons
@@ -95,14 +100,6 @@ btnFilterHotelsRestaurants.addEventListener("click", function () {
     generatePortfolio(portfolioFiltered);
 });
 
-
-
-
-
-
-
-
-
 // Modal code
 
 // DOM elements recovery
@@ -129,6 +126,10 @@ sectionModale.appendChild(errorMsg);
 
 // Portfolio preview creation function on modal (with remove project function call inside)
 function generatePortfolioModale(portfolio) {
+
+    // Gallery clear
+    galleryModale.innerHTML = ""
+
     for (let i = 0; i < portfolio.length; i++) {
 
         const project = portfolio[i];
@@ -136,10 +137,9 @@ function generatePortfolioModale(portfolio) {
         const imageElement = document.createElement("img");
         const btnDelete = document.createElement("img")
         imageElement.src = project.imageUrl;
-        btnDelete.src = "/FrontEnd/assets/icons/trash.png";
+        btnDelete.src = "./assets/icons/trash.png";
         btnDelete.classList.add("btn-delete");
-        btnDelete.addEventListener("click", function (event) {
-            event.preventDefault();
+        btnDelete.addEventListener("click", function () {
             removeProject(project.id)
         })
         imageElement.classList.add("image-figure");
@@ -207,6 +207,9 @@ function modalAdd() {
 }
 
 // Input categorie recovery for new project page
+let categories = await fetch(`${baseUrl}/categories`);
+categories = await categories.json()
+
 function generateCategories(categories) {
     for (let i = 0; i < categories.length; i++) {
 
@@ -222,9 +225,24 @@ function generateCategories(categories) {
 
 generateCategories(categories)
 
+// Upload validation popup
+function popupValidation() {
+    const popup = document.createElement("div");
+    popup.classList.add("popup-validation");
+    popup.textContent = "Projet ajouté avec succés !";
+  
+    popup.style.display = "flex";
+
+    body.appendChild(popup);
+  
+    setTimeout(function() {
+        popup.style.display = "none";
+    }, 3000);
+  }
+
 
 // New project fetch function
-function newProjectFetch() {
+async function newProjectFetch() {
 
     var newProject = new FormData()
 
@@ -241,9 +259,13 @@ function newProjectFetch() {
 
     }).then(function (response) {
         if (response.status === 201) {
-            generatePortfolio(portfolio);
+            portfolioFetch(portfolio);
+            modalEchap()
+            popupValidation()
         }
     })
+
+    // window.location.href = `index.html#${response.id}`
 
     newImageInput.value = "";
     titreInput.value = "";
@@ -291,11 +313,13 @@ function removeProject(projectId) {
         headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
+    }).then(function () {
+        portfolioFetch();
     })
 }
 
 
-addForm.addEventListener("change", function() {
+addForm.addEventListener("change", function () {
     if (newImageInput.value != "" && titreInput.value != "" && categorieInput.value != "") {
         btnAjouter.style.backgroundColor = "#1D6154"
     }
