@@ -26,7 +26,7 @@ btnSeConnecter.addEventListener("click", function (event) {
     }).then(function (response) {
         if (response.status === 200) {
             return response.json();
-        } else if (response.status === 404) {
+        } else if (response.status === 404 || response.status === 401) {
             loginFailed.innerText = "Erreur dans l'identifiant ou le mot de passe";
         } else {
             console.log("Erreur " + response.status);

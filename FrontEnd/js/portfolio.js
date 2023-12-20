@@ -30,7 +30,6 @@ btnLog.addEventListener("click", function () {
 });
 
 // API portfolio fetch function
-let portfolio = ""
 async function portfolioFetch() {
     let reponse = await fetch(`${baseUrl}/works`);
     portfolio = await reponse.json();
@@ -59,7 +58,6 @@ function generatePortfolio(portfolio) {
         sectionGallery.appendChild(portfolioElement);
         portfolioElement.appendChild(imageElement);
         portfolioElement.appendChild(titleElement);
-        portfolioElement.setAttribute("id", projet.id)
     }
 }
 
@@ -69,7 +67,6 @@ portfolioFetch();
 // Categories filters buttons
 const btnFilterTous = document.querySelector(".filter-tous");
 btnFilterTous.addEventListener("click", function () {
-    document.querySelector(".gallery").innerHTML = "";
     generatePortfolio(portfolio);
 });
 
@@ -78,7 +75,6 @@ btnFilterObjets.addEventListener("click", function () {
     const portfolioFiltered = portfolio.filter(function (portfolio) {
         return portfolio.categoryId === 1;
     });
-    document.querySelector(".gallery").innerHTML = "";
     generatePortfolio(portfolioFiltered);
 });
 
@@ -87,7 +83,6 @@ btnFilterAppartements.addEventListener("click", function () {
     const portfolioFiltered = portfolio.filter(function (portfolio) {
         return portfolio.categoryId === 2;
     });
-    document.querySelector(".gallery").innerHTML = "";
     generatePortfolio(portfolioFiltered);
 });
 
@@ -96,9 +91,9 @@ btnFilterHotelsRestaurants.addEventListener("click", function () {
     const portfolioFiltered = portfolio.filter(function (portfolio) {
         return portfolio.categoryId === 3;
     });
-    document.querySelector(".gallery").innerHTML = "";
     generatePortfolio(portfolioFiltered);
 });
+
 
 // Modal code
 
@@ -264,8 +259,6 @@ async function newProjectFetch() {
             popupValidation()
         }
     })
-
-    // window.location.href = `index.html#${response.id}`
 
     newImageInput.value = "";
     titreInput.value = "";
