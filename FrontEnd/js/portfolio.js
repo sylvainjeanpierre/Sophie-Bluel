@@ -29,6 +29,8 @@ btnLog.addEventListener("click", function () {
     }
 });
 
+let portfolio = ""
+
 // API portfolio fetch function
 async function portfolioFetch() {
     let reponse = await fetch(`${baseUrl}/works`);

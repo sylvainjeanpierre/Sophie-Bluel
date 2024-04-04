@@ -1,8 +1,43 @@
-# Portfolio-architecte-sophie-bluel
+# OpenClassrooms training project - JavaScript
 
-Code du projet 6 d'intégrateur web.
+## Resources provided :
+- Initial frontend package
+- Backend
 
-## Information pour le lancer le code
+## Instructions :
+Create a dynamic web page for a fictional photographer
+- Retrieving projects from the back-end
+- Filter projects by category
+- Adding a user login page
+- Addition of a modal for create, update and delete projects
+- Create, update and delete projects in backend
 
- - Lancer le backend depuis votre terminal en suivant les instruction du fichier ReadMe.
- - Si vous désirez afficher le code du backend et du frontend, faites le dans 2 instances de VSCode différentes pour éviter tout problème
+## Skills :
+- JavaScript
+
+## Run backend locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/sylvainjeanpierre/Sophie-Bluel
+```
+
+Go to the backend directory
+
+```bash
+  cd Sophie-Bluel/Backend
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run start
+```
+
