@@ -41,3 +41,6 @@ Start the server
   npm run start
 ```
 
+## Screenshot
+
+![Screenshot](/screenshot.png)
